@@ -8,6 +8,11 @@
 import UIKit
 
 @IBDesignable class BackgroundImageView: UIImageView {
+//    override var image: UIImage? {
+//        didSet {
+//            image = image?.applyBlur(radius: blur)
+//        }
+//    }
     
     @IBInspectable var blur: CGFloat = 0.0 {
         didSet {
@@ -46,7 +51,8 @@ import UIKit
     }
     
     private func addGradient() {
-        gradientLayer.frame = bounds
+//        gradientLayer.frame = bounds
+        gradientLayer.frame = UIScreen.main.bounds
         gradientLayer.colors = [
             startColor.cgColor,
             endColor.cgColor,
@@ -55,11 +61,4 @@ import UIKit
         gradientLayer.endPoint = CGPoint(x: 1, y: 0.5)
         layer.addSublayer(gradientLayer)
     }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        gradientLayer.frame = bounds
-    }
-    
 }
