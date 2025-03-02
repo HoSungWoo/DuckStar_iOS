@@ -9,14 +9,18 @@ import UIKit
 
 class AnimeViewController: UIViewController {
     
+    @IBOutlet weak var backgroundImageView: BackgroundImageView!
+    
     @IBOutlet weak var statusBarView: UIView!
     @IBOutlet weak var navLabel: UILabel!
     @IBOutlet weak var navBackButton: UIButton!
+    
     @IBOutlet weak var topConstraints: NSLayoutConstraint!
-    @IBOutlet weak var backgroundImageView: BackgroundImageView!
-    @IBOutlet weak var mainTableView: UITableView!
-    @IBOutlet weak var posterImageView: UIImageView!
     @IBOutlet weak var topView: UIView!
+    @IBOutlet weak var posterImageView: UIImageView!
+    @IBOutlet weak var posterView: UIView!
+    
+    @IBOutlet weak var mainTableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +30,13 @@ class AnimeViewController: UIViewController {
         
         mainTableView.register(UINib(nibName: String(describing: RatingTableViewCell.self), bundle: nil), forCellReuseIdentifier: String(describing: RatingTableViewCell.self))
         mainTableView.contentInset.top = topView.bounds.height
+        
+        posterImageView.layer.cornerRadius = 8
+        posterView.layer.shadowPath = UIBezierPath(roundedRect: posterView.bounds, cornerRadius: posterImageView.layer.cornerRadius).cgPath
+        posterView.layer.shadowColor = UIColor.black.cgColor
+        posterView.layer.shadowRadius = 4
+        posterView.layer.shadowOpacity = 1
+        posterView.layer.shadowOffset = .zero
     }
 }
 

@@ -52,24 +52,34 @@
                                         <color key="textColor" systemColor="systemGrayColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="naruto.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="rwP-xU-VXv">
+                                    <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jms-GN-YxB">
                                         <rect key="frame" x="297" y="16" width="80" height="120"/>
+                                        <subviews>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="naruto.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="rwP-xU-VXv">
+                                                <rect key="frame" x="0.0" y="0.0" width="80" height="120"/>
+                                            </imageView>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="80" id="VDs-m4-ItU"/>
-                                            <constraint firstAttribute="height" constant="120" id="hf6-iE-IpI"/>
+                                            <constraint firstAttribute="width" constant="80" id="AGd-RP-tq3"/>
+                                            <constraint firstAttribute="height" constant="120" id="GZl-Hl-f6b"/>
+                                            <constraint firstItem="rwP-xU-VXv" firstAttribute="leading" secondItem="Jms-GN-YxB" secondAttribute="leading" id="LLC-W2-vKh"/>
+                                            <constraint firstItem="rwP-xU-VXv" firstAttribute="top" secondItem="Jms-GN-YxB" secondAttribute="top" id="eFi-2w-xyz"/>
+                                            <constraint firstAttribute="trailing" secondItem="rwP-xU-VXv" secondAttribute="trailing" id="jUs-mC-XIA"/>
+                                            <constraint firstAttribute="bottom" secondItem="rwP-xU-VXv" secondAttribute="bottom" id="usJ-ve-1UF"/>
                                         </constraints>
-                                    </imageView>
+                                    </view>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="WJO-rR-Q2N" firstAttribute="leading" secondItem="Pzo-7U-CHA" secondAttribute="leading" constant="16" id="1Yy-UP-MeM"/>
-                                    <constraint firstItem="rwP-xU-VXv" firstAttribute="leading" secondItem="WJO-rR-Q2N" secondAttribute="trailing" constant="16" id="Qka-rx-jKI"/>
-                                    <constraint firstItem="rwP-xU-VXv" firstAttribute="leading" secondItem="Ker-P9-lHt" secondAttribute="trailing" constant="16" id="UPH-dL-LLJ"/>
-                                    <constraint firstItem="rwP-xU-VXv" firstAttribute="top" secondItem="Pzo-7U-CHA" secondAttribute="top" constant="16" id="d2n-fo-j2O"/>
+                                    <constraint firstItem="Jms-GN-YxB" firstAttribute="top" secondItem="Pzo-7U-CHA" secondAttribute="top" constant="16" id="L94-SU-96b"/>
+                                    <constraint firstItem="Jms-GN-YxB" firstAttribute="leading" secondItem="WJO-rR-Q2N" secondAttribute="trailing" constant="16" id="Qka-rx-jKI"/>
                                     <constraint firstItem="Ker-P9-lHt" firstAttribute="leading" secondItem="Pzo-7U-CHA" secondAttribute="leading" constant="16" id="iW3-CQ-te4"/>
                                     <constraint firstItem="WJO-rR-Q2N" firstAttribute="top" secondItem="Ker-P9-lHt" secondAttribute="bottom" constant="8" id="j8z-j8-hmt"/>
-                                    <constraint firstAttribute="trailing" secondItem="rwP-xU-VXv" secondAttribute="trailing" constant="16" id="jBe-4g-jVj"/>
-                                    <constraint firstAttribute="bottom" secondItem="rwP-xU-VXv" secondAttribute="bottom" constant="16" id="jbU-rP-dZZ"/>
                                     <constraint firstItem="Ker-P9-lHt" firstAttribute="top" secondItem="Pzo-7U-CHA" secondAttribute="top" constant="16" id="khY-0T-CIn"/>
+                                    <constraint firstAttribute="bottom" secondItem="Jms-GN-YxB" secondAttribute="bottom" constant="16" id="tcL-uA-Pdl"/>
+                                    <constraint firstItem="Jms-GN-YxB" firstAttribute="leading" secondItem="Ker-P9-lHt" secondAttribute="trailing" constant="16" id="ude-rg-Azr"/>
+                                    <constraint firstAttribute="trailing" secondItem="Jms-GN-YxB" secondAttribute="trailing" constant="16" id="xal-68-oGT"/>
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="gaS-nF-lQy">
@@ -82,6 +92,11 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xvu-BF-k6c" userLabel="nav">
                                 <rect key="frame" x="0.0" y="59" width="393" height="38"/>
                                 <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="나루토 질풍전" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jzv-6l-Cxm">
+                                        <rect key="frame" x="46" y="8.6666666666666714" width="98" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="inQ-95-iFI">
                                         <rect key="frame" x="0.0" y="0.0" width="38" height="38"/>
                                         <constraints>
@@ -91,11 +106,6 @@
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" image="chevron.left" catalog="system"/>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="나루토 질풍전" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jzv-6l-Cxm">
-                                        <rect key="frame" x="46" y="8.6666666666666714" width="98" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="38" id="3Qc-1U-Pb4"/>
@@ -136,6 +146,7 @@
                         <outlet property="navBackButton" destination="inQ-95-iFI" id="6X1-ne-hT5"/>
                         <outlet property="navLabel" destination="jzv-6l-Cxm" id="8tf-sN-mJx"/>
                         <outlet property="posterImageView" destination="rwP-xU-VXv" id="AEP-E6-SIX"/>
+                        <outlet property="posterView" destination="Jms-GN-YxB" id="DGd-TU-VCW"/>
                         <outlet property="statusBarView" destination="XrT-yK-lx1" id="3EO-3q-otI"/>
                         <outlet property="topConstraints" destination="8Dr-4k-sHc" id="g3Z-6G-7wt"/>
                         <outlet property="topView" destination="Pzo-7U-CHA" id="uCk-s5-sGm"/>
@@ -153,7 +164,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGrayColor">
-            <color red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
