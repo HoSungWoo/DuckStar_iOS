@@ -1,0 +1,24 @@
+{
+  "originHash" : "416053c1b02b04589d4b9653d1d6b38c0207cc33ead6d19e49a11a35298a104b",
+  "pins" : [
+    {
+      "identity" : "effectimageview",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/H0sungKim/EffectImageView.git",
+      "state" : {
+        "revision" : "613033a7fb803a3dc536ddfea74a905c25a6dcb7",
+        "version" : "1.0.1"
+      }
+    },
+    {
+      "identity" : "kingfisher",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/onevcat/Kingfisher.git",
+      "state" : {
+        "revision" : "b450a3b30e0767277a6eed7e02dbdebd7d173da0",
+        "version" : "8.3.0"
+      }
+    }
+  ],
+  "version" : 3
+}

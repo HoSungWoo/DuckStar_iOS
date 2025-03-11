@@ -6,12 +6,14 @@
 //
 
 import UIKit
+import EffectImageView
 
-class AnimeViewController: UIViewController {
+public class AnimeViewController: UIViewController {
     
-    @IBOutlet weak var backgroundImageView: BackgroundImageView!
+    @IBOutlet weak var effectImageView: EffectImageView!
     
     @IBOutlet weak var statusBarView: UIView!
+    @IBOutlet weak var navView: UIView!
     @IBOutlet weak var navLabel: UILabel!
     @IBOutlet weak var navBackButton: UIButton!
     
@@ -19,33 +21,36 @@ class AnimeViewController: UIViewController {
     @IBOutlet weak var topView: UIView!
     @IBOutlet weak var posterImageView: UIImageView!
     @IBOutlet weak var posterView: UIView!
+    @IBOutlet weak var platformCollectionView: UICollectionView!
     
     @IBOutlet weak var mainTableView: UITableView!
     
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
         
         mainTableView.delegate = self
         mainTableView.dataSource = self
         
-        mainTableView.register(UINib(nibName: String(describing: RatingTableViewCell.self), bundle: nil), forCellReuseIdentifier: String(describing: RatingTableViewCell.self))
+        mainTableView.register(UINib(nibName: String(describing: RatingTableViewCell.self), bundle: Bundle.presentationLayer), forCellReuseIdentifier: String(describing: RatingTableViewCell.self))
         mainTableView.contentInset.top = topView.bounds.height
         
-        posterImageView.layer.cornerRadius = 8
+//        posterImageView.layer.cornerRadius = 8
         posterView.layer.shadowPath = UIBezierPath(roundedRect: posterView.bounds, cornerRadius: posterImageView.layer.cornerRadius).cgPath
         posterView.layer.shadowColor = UIColor.black.cgColor
-        posterView.layer.shadowRadius = 4
+//        posterView.layer.shadowRadius = 8
         posterView.layer.shadowOpacity = 1
         posterView.layer.shadowOffset = .zero
+        posterImageView.image = UIImage(resource: .naruto)
+        print(posterImageView.image)
     }
 }
 
 extension AnimeViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 50
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: RatingTableViewCell
         if let reusableCell = tableView.dequeueReusableCell(withIdentifier: String(describing: RatingTableViewCell.self), for: indexPath) as? RatingTableViewCell {
             cell = reusableCell
@@ -56,23 +61,29 @@ extension AnimeViewController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let newConstraints = -(mainTableView.contentInset.top + scrollView.contentOffset.y)
-        if navLabel.alpha == 0 && scrollView.contentOffset.y > 0 {
+        if navView.isHidden && scrollView.contentOffset.y > 0 {
             UIView.animate(withDuration: 0.2, animations: { [weak self] in
-                self?.navLabel.alpha = 1
+                self?.navView.isHidden = false
                 self?.statusBarView.backgroundColor = .systemBackground
                 self?.navBackButton.tintColor = .label
             })
         }
-        if navLabel.alpha == 1 && scrollView.contentOffset.y < 0 {
+        if !navView.isHidden && scrollView.contentOffset.y < 0 {
             UIView.animate(withDuration: 0.2, animations: { [weak self] in
-                self?.navLabel.alpha = 0
+                self?.navView.isHidden = true
                 self?.statusBarView.backgroundColor = .clear
                 self?.navBackButton.tintColor = .white
             })
         }
-        topConstraints.constant = newConstraints / 4
+        print(newConstraints)
+        if newConstraints >= 0 {
+            topConstraints.constant = newConstraints
+            // 확대
+        } else {
+            topConstraints.constant = newConstraints / 4
+        }
         topView.alpha = -scrollView.contentOffset.y / mainTableView.contentInset.top
     }
 }

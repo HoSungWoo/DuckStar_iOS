@@ -5,11 +5,14 @@
 //  Created by 김호성 on 2025.02.25.
 //
 
+import PresentationLayer
+
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
+    let appDIProvider: AppDIProvider = AppDIProvider()
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
@@ -19,9 +22,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
-        
-        let animeViewController = UIViewController.getViewController(viewControllerEnum: .anime)
-        window?.rootViewController = animeViewController
+        let navigationController: DINavigationController = DINavigationController(viewControllerFactory: appDIProvider ,rootViewController: appDIProvider.createAnimeViewController())
+        navigationController.navigationBar.isHidden = true
+        window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
     }
 

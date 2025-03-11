@@ -6,7 +6,16 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		968970E12D802C8500B59979 /* PresentationLayer in Frameworks */ = {isa = PBXBuildFile; productRef = 968970E02D802C8500B59979 /* PresentationLayer */; };
+		968971052D802D8200B59979 /* DataLayer in Frameworks */ = {isa = PBXBuildFile; productRef = 968971042D802D8200B59979 /* DataLayer */; };
+		968971072D802D8200B59979 /* DomainLayer in Frameworks */ = {isa = PBXBuildFile; productRef = 968971062D802D8200B59979 /* DomainLayer */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
+		968970D92D802B9B00B59979 /* DataLayer */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = DataLayer; sourceTree = "<group>"; };
+		968970DA2D802B9B00B59979 /* DomainLayer */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = DomainLayer; sourceTree = "<group>"; };
+		968970DB2D802B9B00B59979 /* PresentationLayer */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = PresentationLayer; sourceTree = "<group>"; };
 		96B143AA2D6D94D100A343C7 /* DuckStar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DuckStar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -36,6 +45,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				968971052D802D8200B59979 /* DataLayer in Frameworks */,
+				968970E12D802C8500B59979 /* PresentationLayer in Frameworks */,
+				968971072D802D8200B59979 /* DomainLayer in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -45,7 +57,11 @@
 		96B143A12D6D94D100A343C7 = {
 			isa = PBXGroup;
 			children = (
+				968970D92D802B9B00B59979 /* DataLayer */,
+				968970DA2D802B9B00B59979 /* DomainLayer */,
+				968970DB2D802B9B00B59979 /* PresentationLayer */,
 				96B143AC2D6D94D100A343C7 /* DuckStar */,
+				96D22EDC2D7DB2F60020FD05 /* Frameworks */,
 				96B143AB2D6D94D100A343C7 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -56,6 +72,13 @@
 				96B143AA2D6D94D100A343C7 /* DuckStar.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		96D22EDC2D7DB2F60020FD05 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -78,6 +101,9 @@
 			);
 			name = DuckStar;
 			packageProductDependencies = (
+				968970E02D802C8500B59979 /* PresentationLayer */,
+				968971042D802D8200B59979 /* DataLayer */,
+				968971062D802D8200B59979 /* DomainLayer */,
 			);
 			productName = DuckStar;
 			productReference = 96B143AA2D6D94D100A343C7 /* DuckStar.app */;
@@ -107,6 +133,8 @@
 			);
 			mainGroup = 96B143A12D6D94D100A343C7;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 96B143AB2D6D94D100A343C7 /* Products */;
 			projectDirPath = "";
@@ -335,6 +363,21 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		968970E02D802C8500B59979 /* PresentationLayer */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PresentationLayer;
+		};
+		968971042D802D8200B59979 /* DataLayer */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = DataLayer;
+		};
+		968971062D802D8200B59979 /* DomainLayer */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = DomainLayer;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 96B143A22D6D94D100A343C7 /* Project object */;
 }

@@ -7,25 +7,11 @@
 
 import UIKit
 
-enum ViewControllerEnum: String, CaseIterable {
-    case anime
-}
-
 extension UIViewController {
-
-    // MARK: - Public Method
-    class func getViewController(viewControllerEnum: ViewControllerEnum) -> UIViewController {
-        switch viewControllerEnum {
-        case .anime:
-            return getViewController(storyboard: "Anime", identifier: String(describing: AnimeViewController.self), modalPresentationStyle: .fullScreen)
-        }
-    }
-    
-    // MARK: - Private Method
-    private class func getViewController(storyboard: String, identifier: String, modalPresentationStyle: UIModalPresentationStyle) -> UIViewController {
-        let sb = UIStoryboard(name: storyboard, bundle: nil)
-        let vc = sb.instantiateViewController(withIdentifier: identifier)
-        vc.modalPresentationStyle = modalPresentationStyle
+    class func create<T: UIViewController>() -> T {
+        let identifier: String = String(describing: T.self)
+        let sb = UIStoryboard(name: identifier, bundle: Bundle.presentationLayer)
+        let vc = sb.instantiateViewController(withIdentifier: identifier) as! T
         return vc
     }
 }
