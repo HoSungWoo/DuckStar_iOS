@@ -34,14 +34,16 @@ public class AnimeViewController: UIViewController {
         mainTableView.register(UINib(nibName: String(describing: RatingTableViewCell.self), bundle: Bundle.presentationLayer), forCellReuseIdentifier: String(describing: RatingTableViewCell.self))
         mainTableView.contentInset.top = topView.bounds.height
         
-//        posterImageView.layer.cornerRadius = 8
+        posterImageView.layer.cornerRadius = 4
         posterView.layer.shadowPath = UIBezierPath(roundedRect: posterView.bounds, cornerRadius: posterImageView.layer.cornerRadius).cgPath
         posterView.layer.shadowColor = UIColor.black.cgColor
-//        posterView.layer.shadowRadius = 8
+        posterView.layer.shadowRadius = 4
         posterView.layer.shadowOpacity = 1
         posterView.layer.shadowOffset = .zero
         posterImageView.image = UIImage(resource: .naruto)
-        print(posterImageView.image)
+        
+        effectImageView.colors = [.red.withAlphaComponent(0.5), .blue.withAlphaComponent(0.5)]
+        effectImageView.locations = [0, 1]
     }
 }
 
@@ -80,7 +82,8 @@ extension AnimeViewController: UITableViewDelegate, UITableViewDataSource {
         print(newConstraints)
         if newConstraints >= 0 {
             topConstraints.constant = newConstraints
-            // 확대
+            effectImageView.scale = 1.5 - 0.5 * pow(exp(0.01), -newConstraints)
+            print(effectImageView.scale)
         } else {
             topConstraints.constant = newConstraints / 4
         }

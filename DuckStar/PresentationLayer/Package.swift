@@ -17,7 +17,6 @@ let package = Package(
     dependencies: [
         .package(name: "DomainLayer", path: "../DomainLayer"),
         .package(url: "https://github.com/onevcat/Kingfisher.git", from: "8.3.0"),
-        .package(url: "https://github.com/H0sungKim/EffectImageView.git", from: "1.0.0"),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -27,7 +26,6 @@ let package = Package(
             dependencies: [
                 "DomainLayer",
                 "Kingfisher",
-                "EffectImageView",
             ]
         ),
     ]
