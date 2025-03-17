@@ -16,34 +16,49 @@ public class AnimeViewController: UIViewController {
     @IBOutlet weak var navView: UIView!
     @IBOutlet weak var navLabel: UILabel!
     @IBOutlet weak var navBackButton: UIButton!
-    
-    @IBOutlet weak var topConstraints: NSLayoutConstraint!
+    @IBOutlet weak var topViewHeight: NSLayoutConstraint!
     @IBOutlet weak var topView: UIView!
-    @IBOutlet weak var posterImageView: UIImageView!
-    @IBOutlet weak var posterView: UIView!
     @IBOutlet weak var platformCollectionView: UICollectionView!
-    
+    @IBOutlet weak var platformCollectionViewGestureReceiver: UIView!
     @IBOutlet weak var mainTableView: UITableView!
     
     public override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        
         mainTableView.delegate = self
         mainTableView.dataSource = self
-        
         mainTableView.register(UINib(nibName: String(describing: RatingTableViewCell.self), bundle: Bundle.presentationLayer), forCellReuseIdentifier: String(describing: RatingTableViewCell.self))
-        mainTableView.contentInset.top = topView.bounds.height
+        mainTableView.contentInset.top = -topViewHeight.constant
         
-        posterImageView.layer.cornerRadius = 4
-        posterView.layer.shadowPath = UIBezierPath(roundedRect: posterView.bounds, cornerRadius: posterImageView.layer.cornerRadius).cgPath
-        posterView.layer.shadowColor = UIColor.black.cgColor
-        posterView.layer.shadowRadius = 4
-        posterView.layer.shadowOpacity = 1
-        posterView.layer.shadowOffset = .zero
-        posterImageView.image = UIImage(resource: .naruto)
+//        topView.addGestureRecognizer(mainTableView.panGestureRecognizer)
+        platformCollectionViewGestureReceiver.addGestureRecognizer(platformCollectionView.panGestureRecognizer)
+        
+//        posterImageView.image = UIImage(resource: .naruto)
+//        posterImageView.layer.cornerRadius = 4
+//        posterView.layer.shadowPath = UIBezierPath(roundedRect: posterView.bounds, cornerRadius: posterImageView.layer.cornerRadius).cgPath
+//        posterView.layer.shadowColor = UIColor.black.cgColor
+//        posterView.layer.shadowRadius = 4
+//        posterView.layer.shadowOpacity = 1
+//        posterView.layer.shadowOffset = .zero
         
         effectImageView.colors = [.red.withAlphaComponent(0.5), .blue.withAlphaComponent(0.5)]
         effectImageView.locations = [0, 1]
+        effectImageView.blur = 0
+        effectImageView.startPoint = .init(x: 0, y: 0.5)
+        effectImageView.endPoint = .init(x: 1, y: 0.5)
+//        effectImageView.image = UIImage(resource: .naruto)
+        
+        platformCollectionView.register(UINib(nibName: String(describing: PlatformCollectionViewCell.self), bundle: Bundle.presentationLayer), forCellWithReuseIdentifier: String(describing: PlatformCollectionViewCell.self))
+        platformCollectionView.delegate = self
+        platformCollectionView.dataSource = self
+        platformCollectionView.contentInset = .init(top: 0, left: 16, bottom: 0, right: 16)
+//        platformCollectionView.addGestureRecognizer(mainTableView.panGestureRecognizer)
+//        view.bringSubviewToFront(platformCollectionView)
+    }
+    @IBAction func onClickBack(_ sender: Any) {
+        print("onClickBack")
     }
 }
 
@@ -64,6 +79,8 @@ extension AnimeViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        guard let tableView = scrollView as? UITableView else { return }
+        print(-(mainTableView.contentInset.top + scrollView.contentOffset.y))
         let newConstraints = -(mainTableView.contentInset.top + scrollView.contentOffset.y)
         if navView.isHidden && scrollView.contentOffset.y > 0 {
             UIView.animate(withDuration: 0.2, animations: { [weak self] in
@@ -79,14 +96,41 @@ extension AnimeViewController: UITableViewDelegate, UITableViewDataSource {
                 self?.navBackButton.tintColor = .white
             })
         }
-        print(newConstraints)
-        if newConstraints >= 0 {
-            topConstraints.constant = newConstraints
-            effectImageView.scale = 1.5 - 0.5 * pow(exp(0.01), -newConstraints)
-            print(effectImageView.scale)
+//        if newConstraints >= 0 {
+        topViewHeight.constant = scrollView.contentOffset.y
+            effectImageView.scale = GlobalConst.maximumZoomScale - (GlobalConst.maximumZoomScale - 1) * pow(exp(GlobalConst.zoomSpeed), -newConstraints)
+//        } else {
+////            topConstraints.constant = newConstraints / 4
+//            topViewHeight.constant = newConstraints
+//        }
+//        topView.alpha = -scrollView.contentOffset.y / mainTableView.contentInset.top
+    }
+}
+
+extension AnimeViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 10
+    }
+    
+    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell: PlatformCollectionViewCell
+        if let reusableCell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: PlatformCollectionViewCell.self), for: indexPath) as? PlatformCollectionViewCell {
+            cell = reusableCell
         } else {
-            topConstraints.constant = newConstraints / 4
+            let objectArray = Bundle.presentationLayer.loadNibNamed(String(describing: PlatformCollectionViewCell.self), owner: nil, options: nil)
+            cell = objectArray![0] as! PlatformCollectionViewCell
         }
-        topView.alpha = -scrollView.contentOffset.y / mainTableView.contentInset.top
+        cell.mainImageView.layer.cornerRadius = collectionView.bounds.height / 2
+        cell.mainView.layer.cornerRadius = collectionView.bounds.height / 2
+        return cell
+    }
+    
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let size: CGFloat = collectionView.bounds.height
+        return CGSize(width: size, height: size)
+    }
+    
+    public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print(indexPath)
     }
 }

@@ -7,15 +7,27 @@
 
 import UIKit
 
-class EffectImageView: UIView {
+@IBDesignable public class EffectImageView: UIView {
     
-    let mainImageView: UIImageView = UIImageView()
-    let gradientView: GradientView = GradientView()
-    let blurView: UIVisualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
+    private let mainImageView: UIImageView = UIImageView()
+    private let gradientView: GradientView = GradientView()
+    private let blurView: UIVisualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
+    
+    public override var contentMode: UIView.ContentMode {
+        didSet {
+            mainImageView.contentMode = contentMode
+        }
+    }
     
     @IBInspectable public var image: UIImage? {
         didSet {
-            mainImageView.image = image?.withBlur(radius: 0)
+            mainImageView.image = image?.withBlur(radius: blur)
+        }
+    }
+    
+    @IBInspectable public var blur: CGFloat = 0.0 {
+        didSet {
+            mainImageView.image = image?.withBlur(radius: blur)
         }
     }
     
@@ -25,15 +37,14 @@ class EffectImageView: UIView {
         }
     }
     
-    public var locations: [NSNumber] = [] {
+    @IBInspectable public var locations: [NSNumber] = [] {
         didSet {
             gradientView.locations = locations
         }
     }
     
-    public var scale: CGFloat = 1.0 {
+    @IBInspectable public var scale: CGFloat = 1.0 {
         didSet {
-//            mainImageView.transform = .identity
             mainImageView.transform = CGAffineTransform(scaleX: scale, y: scale)
         }
     }
@@ -52,17 +63,17 @@ class EffectImageView: UIView {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         
-        initializeImageView()
+        initializeView()
     }
     
-    public override func didAddSubview(_ subview: UIView) {
+    override public func didAddSubview(_ subview: UIView) {
         super.didAddSubview(subview)
 //        sendSubviewToBack(blurView)
         sendSubviewToBack(gradientView)
         sendSubviewToBack(mainImageView)
     }
     
-    private func initializeImageView() {
+    private func initializeView() {
         mainImageView.translatesAutoresizingMaskIntoConstraints = false
         gradientView.translatesAutoresizingMaskIntoConstraints = false
         blurView.translatesAutoresizingMaskIntoConstraints = false
@@ -72,7 +83,6 @@ class EffectImageView: UIView {
 //        addSubview(blurView)
         addSubview(gradientView)
         addSubview(mainImageView)
-        
         
         NSLayoutConstraint.activate([
             mainImageView.topAnchor.constraint(equalTo: topAnchor),
@@ -97,7 +107,7 @@ class EffectImageView: UIView {
 }
 
 extension EffectImageView: UIScrollViewDelegate {
-    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+    public func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return mainImageView
     }
 }
