@@ -11,7 +11,6 @@ import EffectImageView
 public class AnimeViewController: UIViewController {
     
     @IBOutlet weak var effectImageView: EffectImageView!
-    
     @IBOutlet weak var statusBarView: UIView!
     @IBOutlet weak var navView: UIView!
     @IBOutlet weak var navLabel: UILabel!
@@ -43,12 +42,12 @@ public class AnimeViewController: UIViewController {
 //        posterView.layer.shadowOpacity = 1
 //        posterView.layer.shadowOffset = .zero
         
-        effectImageView.colors = [.red.withAlphaComponent(0.5), .blue.withAlphaComponent(0.5)]
-        effectImageView.locations = [0, 1]
+        effectImageView.colors = [.clear, .main.withAlphaComponent(0.8), .maindark]
+        effectImageView.locations = [0, 0.6, 1]
         effectImageView.blur = 0
-        effectImageView.startPoint = .init(x: 0, y: 0.5)
-        effectImageView.endPoint = .init(x: 1, y: 0.5)
-//        effectImageView.image = UIImage(resource: .naruto)
+        effectImageView.startPoint = .init(x: 0.5, y: 0)
+        effectImageView.endPoint = .init(x: 0.5, y: 1)
+        effectImageView.image = UIImage(resource: .naruto)
         
         platformCollectionView.register(UINib(nibName: String(describing: PlatformCollectionViewCell.self), bundle: Bundle.presentationLayer), forCellWithReuseIdentifier: String(describing: PlatformCollectionViewCell.self))
         platformCollectionView.delegate = self
@@ -79,9 +78,10 @@ extension AnimeViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        // platformCollectionView에서 Call되는 것 막기
         guard let tableView = scrollView as? UITableView else { return }
-        print(-(mainTableView.contentInset.top + scrollView.contentOffset.y))
-        let newConstraints = -(mainTableView.contentInset.top + scrollView.contentOffset.y)
+        
+        // nav 상태 변경
         if navView.isHidden && scrollView.contentOffset.y > 0 {
             UIView.animate(withDuration: 0.2, animations: { [weak self] in
                 self?.navView.isHidden = false
@@ -96,14 +96,22 @@ extension AnimeViewController: UITableViewDelegate, UITableViewDataSource {
                 self?.navBackButton.tintColor = .white
             })
         }
-//        if newConstraints >= 0 {
+        
+        // 한계보다 더 밑으로 내렸을 때 사진 확대
+        if scrollView.contentOffset.y > tableView.contentInset.top {
+            effectImageView.scale = GlobalConst.maximumZoomScale - (GlobalConst.maximumZoomScale - 1) * pow(exp(GlobalConst.zoomSpeed), mainTableView.contentInset.top + scrollView.contentOffset.y)
+        }
+        
+        topView.alpha = -scrollView.contentOffset.y / (mainTableView.contentInset.top/2)
+        
         topViewHeight.constant = scrollView.contentOffset.y
-            effectImageView.scale = GlobalConst.maximumZoomScale - (GlobalConst.maximumZoomScale - 1) * pow(exp(GlobalConst.zoomSpeed), -newConstraints)
+//        let scrollDecelerationPoint: CGFloat = tableView.contentInset.top/3
+//        let scrollDecelerationRate: CGFloat = 4
+//        if -scrollView.contentOffset.y < scrollDecelerationPoint {
+//            topViewHeight.constant = -scrollDecelerationPoint + (scrollView.contentOffset.y + scrollDecelerationPoint) / scrollDecelerationRate
 //        } else {
-////            topConstraints.constant = newConstraints / 4
-//            topViewHeight.constant = newConstraints
+//            topViewHeight.constant = scrollView.contentOffset.y
 //        }
-//        topView.alpha = -scrollView.contentOffset.y / mainTableView.contentInset.top
     }
 }
 

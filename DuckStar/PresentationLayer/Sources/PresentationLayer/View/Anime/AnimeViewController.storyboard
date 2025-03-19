@@ -69,7 +69,7 @@
                                             <constraint firstAttribute="bottom" secondItem="inQ-95-iFI" secondAttribute="bottom" id="yX0-8U-PnQ"/>
                                         </constraints>
                                     </view>
-                                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pzo-7U-CHA" userLabel="Top View">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pzo-7U-CHA" userLabel="Top View">
                                         <rect key="frame" x="0.0" y="101" width="393" height="500"/>
                                         <subviews>
                                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U6F-Ug-WUg">
