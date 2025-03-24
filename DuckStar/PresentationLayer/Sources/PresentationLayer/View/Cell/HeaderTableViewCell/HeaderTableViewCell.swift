@@ -9,9 +9,14 @@ import UIKit
 
 class HeaderTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var chevronImageView: UIImageView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        Task { @MainActor in
+            chevronImageView.tintColor = .dsgray6
+        }
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

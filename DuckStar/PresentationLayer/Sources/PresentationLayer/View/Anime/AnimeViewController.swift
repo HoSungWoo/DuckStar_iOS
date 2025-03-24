@@ -15,33 +15,37 @@ public class AnimeViewController: UIViewController {
     @IBOutlet weak var navView: UIView!
     @IBOutlet weak var navLabel: UILabel!
     @IBOutlet weak var navBackButton: UIButton!
-    @IBOutlet weak var topViewHeight: NSLayoutConstraint!
-    @IBOutlet weak var topView: UIView!
+    @IBOutlet weak var infoViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var infoView: UIView!
+    @IBOutlet weak var starImageView: UIImageView!
+    @IBOutlet weak var ratingLabel: UILabel!
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet weak var storyLabel: UILabel!
     @IBOutlet weak var platformCollectionView: UICollectionView!
     @IBOutlet weak var platformCollectionViewGestureReceiver: UIView!
     @IBOutlet weak var mainTableView: UITableView!
     
     public override func viewDidLoad() {
         super.viewDidLoad()
+        starImageView.image = UIImage(resource: .dsstar).withTintColor(.dsmain)
+        ratingLabel.text = "4.5"
+        ratingLabel.textColor = .dswhite
+        titleLabel.textColor = .dswhite
+        descriptionLabel.textColor = .dsgray4
+        storyLabel.textColor = .dsgray4
         
-        
+        titleLabel.text = "나루토 질풍전"
+        descriptionLabel.text = "TVA / 2022년도 3분기 / 판타지, 액션"
+        storyLabel.text  = "백년이라는 긴 시간 동안 인류와 바깥 세계의 사이를 막아온 벽. 그 벽 너머에는 본 적 없는 세계가 펼쳐져 있었다. 불꽃의 물, 물의 강"
         
         mainTableView.delegate = self
         mainTableView.dataSource = self
         mainTableView.register(UINib(nibName: String(describing: HeaderTableViewCell.self), bundle: Bundle.presentationLayer), forCellReuseIdentifier: String(describing: HeaderTableViewCell.self))
-        mainTableView.contentInset.top = -topViewHeight.constant
-//        topView.addGestureRecognizer(mainTableView.panGestureRecognizer)
+        mainTableView.contentInset.top = -infoViewHeight.constant
         platformCollectionViewGestureReceiver.addGestureRecognizer(platformCollectionView.panGestureRecognizer)
         
-//        posterImageView.image = UIImage(resource: .naruto)
-//        posterImageView.layer.cornerRadius = 4
-//        posterView.layer.shadowPath = UIBezierPath(roundedRect: posterView.bounds, cornerRadius: posterImageView.layer.cornerRadius).cgPath
-//        posterView.layer.shadowColor = UIColor.black.cgColor
-//        posterView.layer.shadowRadius = 4
-//        posterView.layer.shadowOpacity = 1
-//        posterView.layer.shadowOffset = .zero
-        
-        effectImageView.colors = [.clear, .main.withAlphaComponent(0.8), .maindark]
+        effectImageView.colors = [.clear, .dsmain.withAlphaComponent(0.8), .dsmaindark]
         effectImageView.locations = [0, 0.6, 1]
         effectImageView.blur = 0
         effectImageView.startPoint = .init(x: 0.5, y: 0)
@@ -96,10 +100,10 @@ extension AnimeViewController: UITableViewDelegate, UITableViewDataSource {
             })
         }
         
-        topView.alpha = -scrollView.contentOffset.y / (mainTableView.contentInset.top/2)
+        infoView.alpha = -scrollView.contentOffset.y / (mainTableView.contentInset.top/2)
         
-        if topView.alpha > 0 {
-            topViewHeight.constant = scrollView.contentOffset.y
+        if infoView.alpha > 0 {
+            infoViewHeight.constant = scrollView.contentOffset.y
         }
 //        if topView.alpha > 0 {
 //            let scrollDecelerationPoint: CGFloat = tableView.contentInset.top/3
