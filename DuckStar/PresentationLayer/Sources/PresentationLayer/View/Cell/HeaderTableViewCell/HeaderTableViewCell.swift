@@ -7,7 +7,7 @@
 
 import UIKit
 
-class RatingTableViewCell: UITableViewCell {
+class HeaderTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()

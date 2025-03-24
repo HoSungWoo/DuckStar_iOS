@@ -28,9 +28,8 @@ public class AnimeViewController: UIViewController {
         
         mainTableView.delegate = self
         mainTableView.dataSource = self
-        mainTableView.register(UINib(nibName: String(describing: RatingTableViewCell.self), bundle: Bundle.presentationLayer), forCellReuseIdentifier: String(describing: RatingTableViewCell.self))
+        mainTableView.register(UINib(nibName: String(describing: HeaderTableViewCell.self), bundle: Bundle.presentationLayer), forCellReuseIdentifier: String(describing: HeaderTableViewCell.self))
         mainTableView.contentInset.top = -topViewHeight.constant
-        
 //        topView.addGestureRecognizer(mainTableView.panGestureRecognizer)
         platformCollectionViewGestureReceiver.addGestureRecognizer(platformCollectionView.panGestureRecognizer)
         
@@ -67,12 +66,12 @@ extension AnimeViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: RatingTableViewCell
-        if let reusableCell = tableView.dequeueReusableCell(withIdentifier: String(describing: RatingTableViewCell.self), for: indexPath) as? RatingTableViewCell {
+        let cell: HeaderTableViewCell
+        if let reusableCell = tableView.dequeueReusableCell(withIdentifier: String(describing: HeaderTableViewCell.self), for: indexPath) as? HeaderTableViewCell {
             cell = reusableCell
         } else {
-            let objectArray = Bundle.main.loadNibNamed(String(describing: RatingTableViewCell.self), owner: nil, options: nil)
-            cell = objectArray![0] as! RatingTableViewCell
+            let objectArray = Bundle.main.loadNibNamed(String(describing: HeaderTableViewCell.self), owner: nil, options: nil)
+            cell = objectArray![0] as! HeaderTableViewCell
         }
         return cell
     }
@@ -97,21 +96,22 @@ extension AnimeViewController: UITableViewDelegate, UITableViewDataSource {
             })
         }
         
-        // 한계보다 더 밑으로 내렸을 때 사진 확대
-        if scrollView.contentOffset.y > tableView.contentInset.top {
-            effectImageView.scale = GlobalConst.maximumZoomScale - (GlobalConst.maximumZoomScale - 1) * pow(exp(GlobalConst.zoomSpeed), mainTableView.contentInset.top + scrollView.contentOffset.y)
-        }
-        
         topView.alpha = -scrollView.contentOffset.y / (mainTableView.contentInset.top/2)
         
-        topViewHeight.constant = scrollView.contentOffset.y
-//        let scrollDecelerationPoint: CGFloat = tableView.contentInset.top/3
-//        let scrollDecelerationRate: CGFloat = 4
-//        if -scrollView.contentOffset.y < scrollDecelerationPoint {
-//            topViewHeight.constant = -scrollDecelerationPoint + (scrollView.contentOffset.y + scrollDecelerationPoint) / scrollDecelerationRate
-//        } else {
-//            topViewHeight.constant = scrollView.contentOffset.y
+        if topView.alpha > 0 {
+            topViewHeight.constant = scrollView.contentOffset.y
+        }
+//        if topView.alpha > 0 {
+//            let scrollDecelerationPoint: CGFloat = tableView.contentInset.top/3
+//            let scrollDecelerationRate: CGFloat = 4
+//            if -scrollView.contentOffset.y < scrollDecelerationPoint {
+//                topViewHeight.constant = -scrollDecelerationPoint + (scrollView.contentOffset.y + scrollDecelerationPoint) / scrollDecelerationRate
+//            } else {
+//                topViewHeight.constant = scrollView.contentOffset.y
+//            }
 //        }
+        
+        
     }
 }
 

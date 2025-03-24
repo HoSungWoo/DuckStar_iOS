@@ -9,7 +9,7 @@ import UIKit
 
 @IBDesignable public class EffectImageView: UIView {
     
-    private let mainImageView: UIImageView = UIImageView()
+    public let mainImageView: UIImageView = UIImageView()
     private let gradientView: GradientView = GradientView()
     private let blurView: UIVisualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
     
@@ -43,11 +43,11 @@ import UIKit
         }
     }
     
-    @IBInspectable public var scale: CGFloat = 1.0 {
-        didSet {
-            mainImageView.transform = CGAffineTransform(scaleX: scale, y: scale)
-        }
-    }
+//    @IBInspectable public var scale: CGFloat = 1.0 {
+//        didSet {
+//            mainImageView.transform = CGAffineTransform(scaleX: scale, y: scale)
+//        }
+//    }
     
     @IBInspectable public var startPoint: CGPoint = CGPoint(x: 0, y: 0.5) {
         didSet {
@@ -104,10 +104,4 @@ import UIKit
     }
     
     
-}
-
-extension EffectImageView: UIScrollViewDelegate {
-    public func viewForZooming(in scrollView: UIScrollView) -> UIView? {
-        return mainImageView
-    }
 }
