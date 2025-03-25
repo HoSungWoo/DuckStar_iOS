@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -85,22 +86,23 @@
                                                                 <rect key="frame" x="16" y="0.0" width="361" height="30"/>
                                                                 <subviews>
                                                                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LQT-N2-mxF">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="73.333333333333329" height="30"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="71.666666666666671" height="30"/>
                                                                         <subviews>
                                                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="KtX-PF-Eb2">
-                                                                                <rect key="frame" x="8.0000000000000036" y="8" width="57.333333333333343" height="14"/>
+                                                                                <rect key="frame" x="7.9999999999999964" y="8" width="55.666666666666657" height="14"/>
                                                                                 <subviews>
-                                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="PyU-zW-jMi">
+                                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dsstar" translatesAutoresizingMaskIntoConstraints="NO" id="PyU-zW-jMi">
                                                                                         <rect key="frame" x="0.0" y="0.0" width="14" height="14"/>
+                                                                                        <color key="tintColor" name="dsmain"/>
                                                                                         <constraints>
                                                                                             <constraint firstAttribute="width" constant="14" id="Xpm-bz-9nc"/>
                                                                                             <constraint firstAttribute="height" constant="14" id="agC-4g-DvY"/>
                                                                                         </constraints>
                                                                                     </imageView>
                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8H4-1L-V7U">
-                                                                                        <rect key="frame" x="16.000000000000004" y="0.0" width="41.333333333333343" height="14"/>
-                                                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                                                        <nil key="textColor"/>
+                                                                                        <rect key="frame" x="15.999999999999996" y="0.0" width="39.666666666666657" height="14"/>
+                                                                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                                                        <color key="textColor" name="dswhite"/>
                                                                                         <nil key="highlightedColor"/>
                                                                                     </label>
                                                                                 </subviews>
@@ -124,19 +126,19 @@
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ker-P9-lHt">
                                                                 <rect key="frame" x="16" y="38" width="361" height="50"/>
                                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
-                                                                <nil key="textColor"/>
+                                                                <color key="textColor" name="dswhite"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WJO-rR-Q2N">
                                                                 <rect key="frame" x="16" y="96" width="361" height="50"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                                <nil key="textColor"/>
+                                                                <color key="textColor" name="dsgray4"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cKG-zV-0NY">
                                                                 <rect key="frame" x="16" y="154" width="361" height="0.0"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                                <nil key="textColor"/>
+                                                                <color key="textColor" name="dsgray4"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                         </subviews>
@@ -239,6 +241,16 @@
     </scenes>
     <resources>
         <image name="chevron.left" catalog="system" width="97" height="128"/>
+        <image name="dsstar" width="88" height="84"/>
+        <namedColor name="dsgray4">
+            <color red="0.80784313725490198" green="0.83137254901960789" blue="0.85490196078431369" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="dsmain">
+            <color red="0.96862745098039216" green="0.40000000000000002" blue="0.35294117647058826" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="dswhite">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="secondarySystemBackgroundColor">
             <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

@@ -40,6 +40,7 @@ public class AnimeViewController: UIViewController {
         mainTableView.delegate = self
         mainTableView.dataSource = self
         mainTableView.register(UINib(nibName: String(describing: HeaderTableViewCell.self), bundle: Bundle.presentationLayer), forCellReuseIdentifier: String(describing: HeaderTableViewCell.self))
+        mainTableView.register(UINib(nibName: String(describing: StaffTableViewCell.self), bundle: Bundle.presentationLayer), forCellReuseIdentifier: String(describing: StaffTableViewCell.self))
         mainTableView.contentInset.top = -infoViewHeight.constant
         platformCollectionViewGestureReceiver.addGestureRecognizer(platformCollectionView.panGestureRecognizer)
         
@@ -57,12 +58,6 @@ public class AnimeViewController: UIViewController {
     }
     
     private func configure() {
-        starImageView.image = UIImage(resource: .dsstar).withTintColor(.dsmain)
-        
-        ratingLabel.textColor = .dswhite
-        titleLabel.textColor = .dswhite
-        descriptionLabel.textColor = .dsgray4
-        storyLabel.textColor = .dsgray4
         
         ratingBackgroundView.layer.cornerRadius = 4
     }
@@ -88,13 +83,13 @@ extension AnimeViewController: UITableViewDelegate, UITableViewDataSource {
             case .myRating:
                 return 2
             case .rating:
-                return 0
+                return 10
             case .episode:
-                return 0
+                return 10
             case .collection:
-                return 0
+                return 10
             case .gallery:
-                return 0
+                return 10
             }
         }
     }
@@ -121,6 +116,17 @@ extension AnimeViewController: UITableViewDelegate, UITableViewDataSource {
                     cell = objectArray![0] as! HeaderTableViewCell
                 }
                 cell.titleLabel.text = "제작진 및 성우"
+                return cell
+            case 1:
+                let cell: StaffTableViewCell
+                if let reusableCell = tableView.dequeueReusableCell(withIdentifier: String(describing: StaffTableViewCell.self), for: indexPath) as? StaffTableViewCell {
+                    cell = reusableCell
+                } else {
+                    let objectArray = Bundle.main.loadNibNamed(String(describing: StaffTableViewCell.self), owner: nil, options: nil)
+                    cell = objectArray![0] as! StaffTableViewCell
+                }
+                cell.studioLabel.text = "WIT STUDIO"
+                cell.directorLabel.text = "코이즈카 마사시"
                 return cell
             default:
                 break
