@@ -17,6 +17,7 @@ public class AnimeViewController: UIViewController {
     @IBOutlet weak var navBackButton: UIButton!
     @IBOutlet weak var infoViewHeight: NSLayoutConstraint!
     @IBOutlet weak var infoView: UIView!
+    @IBOutlet weak var ratingBackgroundView: UIView!
     @IBOutlet weak var starImageView: UIImageView!
     @IBOutlet weak var ratingLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!
@@ -28,13 +29,10 @@ public class AnimeViewController: UIViewController {
     
     public override func viewDidLoad() {
         super.viewDidLoad()
-        starImageView.image = UIImage(resource: .dsstar).withTintColor(.dsmain)
-        ratingLabel.text = "4.5"
-        ratingLabel.textColor = .dswhite
-        titleLabel.textColor = .dswhite
-        descriptionLabel.textColor = .dsgray4
-        storyLabel.textColor = .dsgray4
         
+        configure()
+        
+        ratingLabel.text = "4.5"
         titleLabel.text = "나루토 질풍전"
         descriptionLabel.text = "TVA / 2022년도 3분기 / 판타지, 액션"
         storyLabel.text  = "백년이라는 긴 시간 동안 인류와 바깥 세계의 사이를 막아온 벽. 그 벽 너머에는 본 적 없는 세계가 펼쳐져 있었다. 불꽃의 물, 물의 강"
@@ -56,28 +54,89 @@ public class AnimeViewController: UIViewController {
         platformCollectionView.delegate = self
         platformCollectionView.dataSource = self
         platformCollectionView.contentInset = .init(top: 0, left: 16, bottom: 0, right: 16)
-//        platformCollectionView.addGestureRecognizer(mainTableView.panGestureRecognizer)
-//        view.bringSubviewToFront(platformCollectionView)
     }
+    
+    private func configure() {
+        starImageView.image = UIImage(resource: .dsstar).withTintColor(.dsmain)
+        
+        ratingLabel.textColor = .dswhite
+        titleLabel.textColor = .dswhite
+        descriptionLabel.textColor = .dsgray4
+        storyLabel.textColor = .dsgray4
+        
+        ratingBackgroundView.layer.cornerRadius = 4
+    }
+    
     @IBAction func onClickBack(_ sender: Any) {
         print("onClickBack")
     }
 }
 
 extension AnimeViewController: UITableViewDelegate, UITableViewDataSource {
+    private enum Section: Int, CaseIterable {
+        case credit = 0
+        case myRating
+        case rating
+        case episode
+        case collection
+        case gallery
+        
+        var numberOfRows: Int {
+            switch self {
+            case .credit:
+                return 3
+            case .myRating:
+                return 2
+            case .rating:
+                return 0
+            case .episode:
+                return 0
+            case .collection:
+                return 0
+            case .gallery:
+                return 0
+            }
+        }
+    }
+    
+    public func numberOfSections(in tableView: UITableView) -> Int {
+        return Section.allCases.count
+    }
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 50
+        return Section(rawValue: section)?.numberOfRows ?? 0
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: HeaderTableViewCell
-        if let reusableCell = tableView.dequeueReusableCell(withIdentifier: String(describing: HeaderTableViewCell.self), for: indexPath) as? HeaderTableViewCell {
-            cell = reusableCell
-        } else {
-            let objectArray = Bundle.main.loadNibNamed(String(describing: HeaderTableViewCell.self), owner: nil, options: nil)
-            cell = objectArray![0] as! HeaderTableViewCell
+        switch Section(rawValue: indexPath.section) {
+        case .none:
+            break
+        case .credit:
+            switch indexPath.row {
+            case 0:
+                let cell: HeaderTableViewCell
+                if let reusableCell = tableView.dequeueReusableCell(withIdentifier: String(describing: HeaderTableViewCell.self), for: indexPath) as? HeaderTableViewCell {
+                    cell = reusableCell
+                } else {
+                    let objectArray = Bundle.main.loadNibNamed(String(describing: HeaderTableViewCell.self), owner: nil, options: nil)
+                    cell = objectArray![0] as! HeaderTableViewCell
+                }
+                cell.titleLabel.text = "제작진 및 성우"
+                return cell
+            default:
+                break
+            }
+        case .myRating:
+            break
+        case .rating:
+            break
+        case .episode:
+            break
+        case .collection:
+            break
+        case .gallery:
+            break
         }
-        return cell
+        return UITableViewCell()
     }
     
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -114,8 +173,9 @@ extension AnimeViewController: UITableViewDelegate, UITableViewDataSource {
 //                topViewHeight.constant = scrollView.contentOffset.y
 //            }
 //        }
-        
-        
+    }
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 

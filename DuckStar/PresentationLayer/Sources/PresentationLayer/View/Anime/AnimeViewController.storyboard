@@ -84,7 +84,7 @@
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lei-5i-PVA">
                                                                 <rect key="frame" x="16" y="0.0" width="361" height="30"/>
                                                                 <subviews>
-                                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LQT-N2-mxF">
+                                                                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LQT-N2-mxF">
                                                                         <rect key="frame" x="0.0" y="0.0" width="73.333333333333329" height="30"/>
                                                                         <subviews>
                                                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="KtX-PF-Eb2">
@@ -106,7 +106,7 @@
                                                                                 </subviews>
                                                                             </stackView>
                                                                         </subviews>
-                                                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="displayP3"/>
+                                                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.31798427152317882" colorSpace="custom" customColorSpace="displayP3"/>
                                                                         <constraints>
                                                                             <constraint firstItem="KtX-PF-Eb2" firstAttribute="top" secondItem="LQT-N2-mxF" secondAttribute="top" constant="8" id="3bu-PH-Nws"/>
                                                                             <constraint firstAttribute="bottom" secondItem="KtX-PF-Eb2" secondAttribute="bottom" constant="8" id="P7V-uv-qjA"/>
@@ -187,7 +187,7 @@
                                     <constraint firstAttribute="trailing" secondItem="XrT-yK-lx1" secondAttribute="trailing" id="sX6-cA-fHr"/>
                                 </constraints>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="gaS-nF-lQy">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="gaS-nF-lQy">
                                 <rect key="frame" x="0.0" y="101" width="393" height="751"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </tableView>
@@ -224,6 +224,7 @@
                         <outlet property="navView" destination="xvu-BF-k6c" id="vAo-bT-QV5"/>
                         <outlet property="platformCollectionView" destination="hZG-qu-ZO2" id="Pvm-oh-Su3"/>
                         <outlet property="platformCollectionViewGestureReceiver" destination="Av7-3f-N0t" id="Aea-ou-ztT"/>
+                        <outlet property="ratingBackgroundView" destination="LQT-N2-mxF" id="xP0-Eq-dxW"/>
                         <outlet property="ratingLabel" destination="8H4-1L-V7U" id="ngj-2Z-LBv"/>
                         <outlet property="starImageView" destination="PyU-zW-jMi" id="P8K-Pp-xPC"/>
                         <outlet property="statusBarView" destination="XrT-yK-lx1" id="3EO-3q-otI"/>
