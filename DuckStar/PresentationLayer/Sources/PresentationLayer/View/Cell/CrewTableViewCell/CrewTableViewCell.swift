@@ -1,5 +1,5 @@
 //
-//  StaffTableViewCell.swift
+//  CrewTableViewCell.swift
 //  PresentationLayer
 //
 //  Created by 김호성 on 2025.03.25.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class StaffTableViewCell: UITableViewCell {
+class CrewTableViewCell: UITableViewCell {
     
     @IBOutlet weak var studioLabel: UILabel!
     @IBOutlet weak var directorLabel: UILabel!

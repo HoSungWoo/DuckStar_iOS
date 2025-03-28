@@ -26,4 +26,14 @@ class AppDIProvider: ViewControllerFactory {
         let viewController: AnimeViewController = AnimeViewController.create()
         return viewController
     }
+    
+    func createCreditViewController() -> CreditViewController {
+        let viewController: CreditViewController = CreditViewController.create()
+        return viewController
+    }
+    
+    func createCastCrewViewController() -> CastCrewViewController {
+        let viewController: CastCrewViewController = CastCrewViewController.create()
+        return viewController
+    }
 }

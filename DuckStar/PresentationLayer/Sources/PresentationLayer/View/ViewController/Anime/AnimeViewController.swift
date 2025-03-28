@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import EffectImageView
 
 public class AnimeViewController: UIViewController {
     
@@ -23,9 +22,15 @@ public class AnimeViewController: UIViewController {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var storyLabel: UILabel!
+    
     @IBOutlet weak var platformCollectionView: UICollectionView!
+    private var platformCollectionViewDelegate: CollectionViewDelegate?
+    private var platformCollectionViewDataSource: CollectionViewDataSource?
     @IBOutlet weak var platformCollectionViewGestureReceiver: UIView!
+    
     @IBOutlet weak var mainTableView: UITableView!
+    private var mainTableViewDelegate: TableViewDelegate?
+    private var mainTableViewDataSource: TableViewDataSource?
     
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,12 +42,9 @@ public class AnimeViewController: UIViewController {
         descriptionLabel.text = "TVA / 2022년도 3분기 / 판타지, 액션"
         storyLabel.text  = "백년이라는 긴 시간 동안 인류와 바깥 세계의 사이를 막아온 벽. 그 벽 너머에는 본 적 없는 세계가 펼쳐져 있었다. 불꽃의 물, 물의 강"
         
-        mainTableView.delegate = self
-        mainTableView.dataSource = self
-        mainTableView.register(UINib(nibName: String(describing: HeaderTableViewCell.self), bundle: Bundle.presentationLayer), forCellReuseIdentifier: String(describing: HeaderTableViewCell.self))
-        mainTableView.register(UINib(nibName: String(describing: StaffTableViewCell.self), bundle: Bundle.presentationLayer), forCellReuseIdentifier: String(describing: StaffTableViewCell.self))
-        mainTableView.contentInset.top = -infoViewHeight.constant
-        platformCollectionViewGestureReceiver.addGestureRecognizer(platformCollectionView.panGestureRecognizer)
+        configureTableView()
+        configureCollectionView()
+        
         
         effectImageView.colors = [.clear, .dsmain.withAlphaComponent(0.8), .dsmaindark]
         effectImageView.locations = [0, 0.6, 1]
@@ -51,10 +53,7 @@ public class AnimeViewController: UIViewController {
         effectImageView.endPoint = .init(x: 0.5, y: 1)
         effectImageView.image = UIImage(resource: .naruto)
         
-        platformCollectionView.register(UINib(nibName: String(describing: PlatformCollectionViewCell.self), bundle: Bundle.presentationLayer), forCellWithReuseIdentifier: String(describing: PlatformCollectionViewCell.self))
-        platformCollectionView.delegate = self
-        platformCollectionView.dataSource = self
-        platformCollectionView.contentInset = .init(top: 0, left: 16, bottom: 0, right: 16)
+        
     }
     
     private func configure() {
@@ -62,13 +61,41 @@ public class AnimeViewController: UIViewController {
         ratingBackgroundView.layer.cornerRadius = 4
     }
     
+    private func configureTableView() {
+        mainTableViewDelegate = TableViewDelegate(didSelectRowAt: mainTableView(_:didSelectRowAt:), scrollViewDidScroll: mainTableViewScrollViewDidScroll(_:))
+        mainTableViewDataSource = TableViewDataSource(numberOfSections: mainTableViewNumberOfSections(in:), numberOfRowsInSection: mainTableView(_:numberOfRowsInSection:), cellForRowAt: mainTableView(_:cellForRowAt:))
+        
+        mainTableView.delegate = mainTableViewDelegate
+        mainTableView.dataSource = mainTableViewDataSource
+        
+        mainTableView.register(UINib(nibName: String(describing: HeaderTableViewCell.self), bundle: Bundle.presentationLayer), forCellReuseIdentifier: String(describing: HeaderTableViewCell.self))
+        mainTableView.register(UINib(nibName: String(describing: CrewTableViewCell.self), bundle: Bundle.presentationLayer), forCellReuseIdentifier: String(describing: CrewTableViewCell.self))
+        mainTableView.register(UINib(nibName: String(describing: CastTableViewCell.self), bundle: Bundle.presentationLayer), forCellReuseIdentifier: String(describing: CastTableViewCell.self))
+        
+        mainTableView.contentInset.top = -infoViewHeight.constant
+    }
+    
+    private func configureCollectionView() {
+        platformCollectionViewGestureReceiver.addGestureRecognizer(platformCollectionView.panGestureRecognizer)
+        
+        platformCollectionViewDelegate = CollectionViewDelegate(didSelectItemAt: platformCollectionView(_:didSelectItemAt:), sizeForItemAt: platformCollectionView(_:layout:sizeForItemAt:))
+        platformCollectionViewDataSource = CollectionViewDataSource(numberOfItemsInSection: platformCollectionView(_:numberOfItemsInSection:), cellForItemAt: platformCollectionView(_:cellForItemAt:))
+        
+        platformCollectionView.delegate = platformCollectionViewDelegate
+        platformCollectionView.dataSource = platformCollectionViewDataSource
+        
+        platformCollectionView.register(UINib(nibName: String(describing: PlatformCollectionViewCell.self), bundle: Bundle.presentationLayer), forCellWithReuseIdentifier: String(describing: PlatformCollectionViewCell.self))
+        
+        platformCollectionView.contentInset = .init(top: 0, left: 16, bottom: 0, right: 16)
+    }
+    
+    
+    
     @IBAction func onClickBack(_ sender: Any) {
         print("onClickBack")
     }
-}
-
-extension AnimeViewController: UITableViewDelegate, UITableViewDataSource {
-    private enum Section: Int, CaseIterable {
+    
+    private enum MainTableViewSection: Int, CaseIterable {
         case credit = 0
         case myRating
         case rating
@@ -94,15 +121,15 @@ extension AnimeViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    public func numberOfSections(in tableView: UITableView) -> Int {
-        return Section.allCases.count
+    private func mainTableViewNumberOfSections(in tableView: UITableView) -> Int {
+        return MainTableViewSection.allCases.count
     }
-    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return Section(rawValue: section)?.numberOfRows ?? 0
+    private func mainTableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return MainTableViewSection(rawValue: section)?.numberOfRows ?? 0
     }
     
-    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        switch Section(rawValue: indexPath.section) {
+    private func mainTableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        switch MainTableViewSection(rawValue: indexPath.section) {
         case .none:
             break
         case .credit:
@@ -112,21 +139,31 @@ extension AnimeViewController: UITableViewDelegate, UITableViewDataSource {
                 if let reusableCell = tableView.dequeueReusableCell(withIdentifier: String(describing: HeaderTableViewCell.self), for: indexPath) as? HeaderTableViewCell {
                     cell = reusableCell
                 } else {
-                    let objectArray = Bundle.main.loadNibNamed(String(describing: HeaderTableViewCell.self), owner: nil, options: nil)
-                    cell = objectArray![0] as! HeaderTableViewCell
+                    let objectArray = Bundle.presentationLayer.loadNibNamed(String(describing: HeaderTableViewCell.self), owner: nil, options: nil)
+                    cell = objectArray!.first! as! HeaderTableViewCell
                 }
                 cell.titleLabel.text = "제작진 및 성우"
                 return cell
             case 1:
-                let cell: StaffTableViewCell
-                if let reusableCell = tableView.dequeueReusableCell(withIdentifier: String(describing: StaffTableViewCell.self), for: indexPath) as? StaffTableViewCell {
+                let cell: CrewTableViewCell
+                if let reusableCell = tableView.dequeueReusableCell(withIdentifier: String(describing: CrewTableViewCell.self), for: indexPath) as? CrewTableViewCell {
                     cell = reusableCell
                 } else {
-                    let objectArray = Bundle.main.loadNibNamed(String(describing: StaffTableViewCell.self), owner: nil, options: nil)
-                    cell = objectArray![0] as! StaffTableViewCell
+                    let objectArray = Bundle.presentationLayer.loadNibNamed(String(describing: CrewTableViewCell.self), owner: nil, options: nil)
+                    cell = objectArray!.first! as! CrewTableViewCell
                 }
                 cell.studioLabel.text = "WIT STUDIO"
                 cell.directorLabel.text = "코이즈카 마사시"
+                return cell
+            case 2:
+                let cell: CastTableViewCell
+                if let reusableCell = tableView.dequeueReusableCell(withIdentifier: String(describing: CastTableViewCell.self), for: indexPath) as? CastTableViewCell {
+                    cell = reusableCell
+                } else {
+                    let objectArray = Bundle.presentationLayer.loadNibNamed(String(describing: CastTableViewCell.self), owner: nil, options: nil)
+                    cell = objectArray!.first! as! CastTableViewCell
+                }
+                
                 return cell
             default:
                 break
@@ -145,9 +182,7 @@ extension AnimeViewController: UITableViewDelegate, UITableViewDataSource {
         return UITableViewCell()
     }
     
-    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        // platformCollectionView에서 Call되는 것 막기
-        guard let tableView = scrollView as? UITableView else { return }
+    private func mainTableViewScrollViewDidScroll(_ scrollView: UIScrollView) {
         
         // nav 상태 변경
         if navView.isHidden && scrollView.contentOffset.y > 0 {
@@ -180,17 +215,39 @@ extension AnimeViewController: UITableViewDelegate, UITableViewDataSource {
 //            }
 //        }
     }
-    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    private func mainTableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        
+        switch MainTableViewSection(rawValue: indexPath.section) {
+        case .none:
+            break
+        case .credit:
+            switch indexPath.row {
+            case 0:
+                guard let viewControllerFactory = (navigationController as? DINavigationController)?.viewControllerFactory else { return }
+                let creditViewController = viewControllerFactory.createCreditViewController()
+                navigationController?.pushViewController(creditViewController, animated: true)
+            default:
+                break
+            }
+        case .myRating:
+            break
+        case .rating:
+            break
+        case .episode:
+            break
+        case .collection:
+            break
+        case .gallery:
+            break
+        }
     }
-}
-
-extension AnimeViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    
+    private func platformCollectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 10
     }
     
-    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    private func platformCollectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: PlatformCollectionViewCell
         if let reusableCell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: PlatformCollectionViewCell.self), for: indexPath) as? PlatformCollectionViewCell {
             cell = reusableCell
@@ -203,12 +260,12 @@ extension AnimeViewController: UICollectionViewDelegate, UICollectionViewDataSou
         return cell
     }
     
-    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    private func platformCollectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let size: CGFloat = collectionView.bounds.height
         return CGSize(width: size, height: size)
     }
     
-    public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    private func platformCollectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(indexPath)
     }
 }

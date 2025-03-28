@@ -10,4 +10,6 @@ import UIKit
 
 public protocol ViewControllerFactory {
     func createAnimeViewController() -> AnimeViewController
+    func createCreditViewController() -> CreditViewController
+    func createCastCrewViewController() -> CastCrewViewController
 }
