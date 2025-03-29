@@ -85,8 +85,6 @@ public class AnimeViewController: UIViewController {
         platformCollectionView.dataSource = platformCollectionViewDataSource
         
         platformCollectionView.register(UINib(nibName: String(describing: PlatformCollectionViewCell.self), bundle: Bundle.presentationLayer), forCellWithReuseIdentifier: String(describing: PlatformCollectionViewCell.self))
-        
-        platformCollectionView.contentInset = .init(top: 0, left: 16, bottom: 0, right: 16)
     }
     
     
@@ -257,6 +255,7 @@ public class AnimeViewController: UIViewController {
         }
         cell.mainImageView.layer.cornerRadius = collectionView.bounds.height / 2
         cell.mainView.layer.cornerRadius = collectionView.bounds.height / 2
+        cell.mainImageView.image = UIImage(resource: .netflix)
         return cell
     }
     
