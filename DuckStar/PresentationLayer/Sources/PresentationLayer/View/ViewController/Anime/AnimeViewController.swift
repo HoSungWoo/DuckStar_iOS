@@ -26,7 +26,6 @@ public class AnimeViewController: UIViewController {
     @IBOutlet weak var platformCollectionView: UICollectionView!
     private var platformCollectionViewDelegate: CollectionViewDelegate?
     private var platformCollectionViewDataSource: CollectionViewDataSource?
-    @IBOutlet weak var platformCollectionViewGestureReceiver: UIView!
     
     @IBOutlet weak var mainTableView: UITableView!
     private var mainTableViewDelegate: TableViewDelegate?
@@ -76,7 +75,6 @@ public class AnimeViewController: UIViewController {
     }
     
     private func configureCollectionView() {
-        platformCollectionViewGestureReceiver.addGestureRecognizer(platformCollectionView.panGestureRecognizer)
         
         platformCollectionViewDelegate = CollectionViewDelegate(didSelectItemAt: platformCollectionView(_:didSelectItemAt:), sizeForItemAt: platformCollectionView(_:layout:sizeForItemAt:))
         platformCollectionViewDataSource = CollectionViewDataSource(numberOfItemsInSection: platformCollectionView(_:numberOfItemsInSection:), cellForItemAt: platformCollectionView(_:cellForItemAt:))
@@ -199,6 +197,7 @@ public class AnimeViewController: UIViewController {
         }
         
         infoView.alpha = -scrollView.contentOffset.y / (mainTableView.contentInset.top/2)
+        platformCollectionView.alpha = -scrollView.contentOffset.y / (mainTableView.contentInset.top/2)
         
         if infoView.alpha > 0 {
             infoViewHeight.constant = scrollView.contentOffset.y

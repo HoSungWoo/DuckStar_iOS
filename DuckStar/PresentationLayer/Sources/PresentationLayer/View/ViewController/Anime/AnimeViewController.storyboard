@@ -77,7 +77,7 @@
                                         <rect key="frame" x="0.0" y="101" width="393" height="500"/>
                                         <subviews>
                                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U6F-Ug-WUg">
-                                                <rect key="frame" x="0.0" y="250" width="393" height="250"/>
+                                                <rect key="frame" x="0.0" y="234" width="393" height="266"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="SNn-Gc-jv1">
                                                         <rect key="frame" x="0.0" y="0.0" width="393" height="170"/>
@@ -144,26 +144,8 @@
                                                         </subviews>
                                                         <directionalEdgeInsets key="directionalLayoutMargins" top="0.0" leading="16" bottom="16" trailing="16"/>
                                                     </stackView>
-                                                    <collectionView multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="hZG-qu-ZO2">
-                                                        <rect key="frame" x="0.0" y="170" width="393" height="48"/>
-                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="height" constant="48" id="gls-Mx-FYV"/>
-                                                        </constraints>
-                                                        <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="16" minimumInteritemSpacing="16" id="BzF-b4-qCu">
-                                                            <size key="itemSize" width="128" height="128"/>
-                                                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                                            <inset key="sectionInset" minX="16" minY="0.0" maxX="16" maxY="0.0"/>
-                                                        </collectionViewFlowLayout>
-                                                        <cells/>
-                                                    </collectionView>
                                                 </subviews>
                                                 <constraints>
-                                                    <constraint firstItem="hZG-qu-ZO2" firstAttribute="top" secondItem="SNn-Gc-jv1" secondAttribute="bottom" id="5Gm-YL-lHl"/>
-                                                    <constraint firstAttribute="trailing" secondItem="hZG-qu-ZO2" secondAttribute="trailing" id="M8l-Rv-gyC"/>
-                                                    <constraint firstAttribute="bottom" secondItem="hZG-qu-ZO2" secondAttribute="bottom" constant="32" id="Neb-eE-URU"/>
-                                                    <constraint firstItem="hZG-qu-ZO2" firstAttribute="leading" secondItem="U6F-Ug-WUg" secondAttribute="leading" id="Q1z-52-HHM"/>
                                                     <constraint firstItem="SNn-Gc-jv1" firstAttribute="leading" secondItem="U6F-Ug-WUg" secondAttribute="leading" id="dDI-CP-qJr"/>
                                                     <constraint firstAttribute="trailing" secondItem="SNn-Gc-jv1" secondAttribute="trailing" id="jv8-54-xYs"/>
                                                     <constraint firstItem="SNn-Gc-jv1" firstAttribute="top" secondItem="U6F-Ug-WUg" secondAttribute="top" id="kd3-zI-VJr"/>
@@ -193,25 +175,36 @@
                                 <rect key="frame" x="0.0" y="101" width="393" height="751"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </tableView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Av7-3f-N0t">
-                                <rect key="frame" x="0.0" y="521" width="393" height="48"/>
-                            </view>
+                            <collectionView multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="hZG-qu-ZO2">
+                                <rect key="frame" x="0.0" y="505" width="393" height="48"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="48" id="gls-Mx-FYV"/>
+                                </constraints>
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="16" minimumInteritemSpacing="16" id="BzF-b4-qCu">
+                                    <size key="itemSize" width="128" height="128"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="16" minY="0.0" maxX="16" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells/>
+                            </collectionView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="REO-Ac-MAi" firstAttribute="top" secondItem="5EZ-qb-Rvc" secondAttribute="top" id="4Nn-yg-aRB"/>
                             <constraint firstItem="REO-Ac-MAi" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="6HU-8A-ma3"/>
-                            <constraint firstItem="Av7-3f-N0t" firstAttribute="leading" secondItem="hZG-qu-ZO2" secondAttribute="leading" id="Qlt-AZ-it6"/>
+                            <constraint firstItem="hZG-qu-ZO2" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="AUu-U0-nYp"/>
+                            <constraint firstItem="SNn-Gc-jv1" firstAttribute="bottom" secondItem="hZG-qu-ZO2" secondAttribute="top" id="MDx-uU-D1e"/>
+                            <constraint firstItem="hZG-qu-ZO2" firstAttribute="bottom" secondItem="U6F-Ug-WUg" secondAttribute="bottom" constant="-48" id="Qbh-zE-YNB"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="gaS-nF-lQy" secondAttribute="trailing" id="TxD-eF-qzM"/>
                             <constraint firstItem="gaS-nF-lQy" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="UA4-B8-xeT"/>
-                            <constraint firstItem="Av7-3f-N0t" firstAttribute="bottom" secondItem="hZG-qu-ZO2" secondAttribute="bottom" id="VsF-WX-nCN"/>
-                            <constraint firstItem="Av7-3f-N0t" firstAttribute="top" secondItem="hZG-qu-ZO2" secondAttribute="top" id="cR5-NZ-FSa"/>
-                            <constraint firstItem="Av7-3f-N0t" firstAttribute="trailing" secondItem="hZG-qu-ZO2" secondAttribute="trailing" id="cdN-ON-DMs"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="top" secondItem="xvu-BF-k6c" secondAttribute="top" id="d6X-np-qO9"/>
                             <constraint firstAttribute="bottom" secondItem="gaS-nF-lQy" secondAttribute="bottom" id="euj-dn-ZR4"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="REO-Ac-MAi" secondAttribute="trailing" id="gRZ-SZ-LrO"/>
                             <constraint firstItem="gaS-nF-lQy" firstAttribute="top" secondItem="XrT-yK-lx1" secondAttribute="bottom" id="mSf-BJ-Y1Y"/>
+                            <constraint firstItem="hZG-qu-ZO2" firstAttribute="trailing" secondItem="vDu-zF-Fre" secondAttribute="trailing" id="sSB-ul-T8n"/>
                             <constraint firstItem="inQ-95-iFI" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="uKr-tU-HDk"/>
                         </constraints>
                     </view>
@@ -225,7 +218,6 @@
                         <outlet property="navLabel" destination="jzv-6l-Cxm" id="8tf-sN-mJx"/>
                         <outlet property="navView" destination="xvu-BF-k6c" id="vAo-bT-QV5"/>
                         <outlet property="platformCollectionView" destination="hZG-qu-ZO2" id="Pvm-oh-Su3"/>
-                        <outlet property="platformCollectionViewGestureReceiver" destination="Av7-3f-N0t" id="Aea-ou-ztT"/>
                         <outlet property="ratingBackgroundView" destination="LQT-N2-mxF" id="xP0-Eq-dxW"/>
                         <outlet property="ratingLabel" destination="8H4-1L-V7U" id="ngj-2Z-LBv"/>
                         <outlet property="starImageView" destination="PyU-zW-jMi" id="P8K-Pp-xPC"/>
@@ -252,7 +244,7 @@
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="secondarySystemBackgroundColor">
-            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
