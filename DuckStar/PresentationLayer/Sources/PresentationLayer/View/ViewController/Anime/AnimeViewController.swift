@@ -31,6 +31,9 @@ public class AnimeViewController: UIViewController {
     private var mainTableViewDelegate: TableViewDelegate?
     private var mainTableViewDataSource: TableViewDataSource?
     
+    private var castCollectionViewDelegate: CollectionViewDelegate?
+    private var castCollectionViewDataSource: CollectionViewDataSource?
+    
     public override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -41,9 +44,9 @@ public class AnimeViewController: UIViewController {
         descriptionLabel.text = "TVA / 2022년도 3분기 / 판타지, 액션"
         storyLabel.text  = "백년이라는 긴 시간 동안 인류와 바깥 세계의 사이를 막아온 벽. 그 벽 너머에는 본 적 없는 세계가 펼쳐져 있었다. 불꽃의 물, 물의 강"
         
-        configureTableView()
-        configureCollectionView()
-        
+        configureMainTableView()
+        configurePlatformCollectionView()
+        configureCastCollectionView()
         
         effectImageView.colors = [.clear, .dsmain.withAlphaComponent(0.8), .dsmaindark]
         effectImageView.locations = [0, 0.6, 1]
@@ -60,7 +63,7 @@ public class AnimeViewController: UIViewController {
         ratingBackgroundView.layer.cornerRadius = 4
     }
     
-    private func configureTableView() {
+    private func configureMainTableView() {
         mainTableViewDelegate = TableViewDelegate(didSelectRowAt: mainTableView(_:didSelectRowAt:), scrollViewDidScroll: mainTableViewScrollViewDidScroll(_:))
         mainTableViewDataSource = TableViewDataSource(numberOfSections: mainTableViewNumberOfSections(in:), numberOfRowsInSection: mainTableView(_:numberOfRowsInSection:), cellForRowAt: mainTableView(_:cellForRowAt:))
         
@@ -74,7 +77,7 @@ public class AnimeViewController: UIViewController {
         mainTableView.contentInset.top = -infoViewHeight.constant
     }
     
-    private func configureCollectionView() {
+    private func configurePlatformCollectionView() {
         
         platformCollectionViewDelegate = CollectionViewDelegate(didSelectItemAt: platformCollectionView(_:didSelectItemAt:), sizeForItemAt: platformCollectionView(_:layout:sizeForItemAt:))
         platformCollectionViewDataSource = CollectionViewDataSource(numberOfItemsInSection: platformCollectionView(_:numberOfItemsInSection:), cellForItemAt: platformCollectionView(_:cellForItemAt:))
@@ -85,6 +88,10 @@ public class AnimeViewController: UIViewController {
         platformCollectionView.register(UINib(nibName: String(describing: PlatformCollectionViewCell.self), bundle: Bundle.presentationLayer), forCellWithReuseIdentifier: String(describing: PlatformCollectionViewCell.self))
     }
     
+    private func configureCastCollectionView() {
+        castCollectionViewDelegate = CollectionViewDelegate(didSelectItemAt: castCollectionView(_:didSelectItemAt:), sizeForItemAt: castCollectionView(_:layout:sizeForItemAt:))
+        castCollectionViewDataSource = CollectionViewDataSource(numberOfItemsInSection: castCollectionView(_:numberOfItemsInSection:), cellForItemAt: castCollectionView(_:cellForItemAt:))
+    }
     
     
     @IBAction func onClickBack(_ sender: Any) {
@@ -159,7 +166,9 @@ public class AnimeViewController: UIViewController {
                     let objectArray = Bundle.presentationLayer.loadNibNamed(String(describing: CastTableViewCell.self), owner: nil, options: nil)
                     cell = objectArray!.first! as! CastTableViewCell
                 }
-                
+                cell.castCollectionView.register(UINib(nibName: String(describing: CastCollectionViewCell.self), bundle: Bundle.presentationLayer), forCellWithReuseIdentifier: String(describing: CastCollectionViewCell.self))
+                cell.castCollectionView.delegate = castCollectionViewDelegate
+                cell.castCollectionView.dataSource = castCollectionViewDataSource
                 return cell
             default:
                 break
@@ -202,15 +211,6 @@ public class AnimeViewController: UIViewController {
         if infoView.alpha > 0 {
             infoViewHeight.constant = scrollView.contentOffset.y
         }
-//        if topView.alpha > 0 {
-//            let scrollDecelerationPoint: CGFloat = tableView.contentInset.top/3
-//            let scrollDecelerationRate: CGFloat = 4
-//            if -scrollView.contentOffset.y < scrollDecelerationPoint {
-//                topViewHeight.constant = -scrollDecelerationPoint + (scrollView.contentOffset.y + scrollDecelerationPoint) / scrollDecelerationRate
-//            } else {
-//                topViewHeight.constant = scrollView.contentOffset.y
-//            }
-//        }
     }
     private func mainTableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
@@ -264,6 +264,33 @@ public class AnimeViewController: UIViewController {
     }
     
     private func platformCollectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print(indexPath)
+    }
+    
+    private func castCollectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 10
+    }
+    
+    private func castCollectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell: CastCollectionViewCell
+        if let reusableCell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: CastCollectionViewCell.self), for: indexPath) as? CastCollectionViewCell {
+            cell = reusableCell
+        } else {
+            let objectArray = Bundle.presentationLayer.loadNibNamed(String(describing: CastCollectionViewCell.self), owner: nil, options: nil)
+            cell = objectArray![0] as! CastCollectionViewCell
+        }
+        cell.profileImageView.layer.cornerRadius = cell.bounds.width / 2
+        cell.profileImageView.image = UIImage(resource: .naruto)
+        cell.nameLabel.text = "코이즈카 마사시"
+        cell.roleLabel.text = "감독"
+        return cell
+    }
+    
+    private func castCollectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 96, height: collectionView.bounds.height)
+    }
+    
+    private func castCollectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(indexPath)
     }
 }
