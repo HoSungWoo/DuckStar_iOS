@@ -73,6 +73,7 @@ public class AnimeViewController: UIViewController {
         mainTableView.register(UINib(nibName: String(describing: HeaderTableViewCell.self), bundle: Bundle.presentationLayer), forCellReuseIdentifier: String(describing: HeaderTableViewCell.self))
         mainTableView.register(UINib(nibName: String(describing: CrewTableViewCell.self), bundle: Bundle.presentationLayer), forCellReuseIdentifier: String(describing: CrewTableViewCell.self))
         mainTableView.register(UINib(nibName: String(describing: CastTableViewCell.self), bundle: Bundle.presentationLayer), forCellReuseIdentifier: String(describing: CastTableViewCell.self))
+        mainTableView.register(UINib(nibName: String(describing: MyRatingTableViewCell.self), bundle: Bundle.presentationLayer), forCellReuseIdentifier: String(describing: MyRatingTableViewCell.self))
         
         mainTableView.contentInset.top = -infoViewHeight.constant
     }
@@ -111,7 +112,7 @@ public class AnimeViewController: UIViewController {
             case .credit:
                 return 3
             case .myRating:
-                return 2
+                return 1
             case .rating:
                 return 10
             case .episode:
@@ -138,34 +139,16 @@ public class AnimeViewController: UIViewController {
         case .credit:
             switch indexPath.row {
             case 0:
-                let cell: HeaderTableViewCell
-                if let reusableCell = tableView.dequeueReusableCell(withIdentifier: String(describing: HeaderTableViewCell.self), for: indexPath) as? HeaderTableViewCell {
-                    cell = reusableCell
-                } else {
-                    let objectArray = Bundle.presentationLayer.loadNibNamed(String(describing: HeaderTableViewCell.self), owner: nil, options: nil)
-                    cell = objectArray!.first! as! HeaderTableViewCell
-                }
+                let cell: HeaderTableViewCell = HeaderTableViewCell.create(tableView: tableView, indexPath: indexPath)
                 cell.titleLabel.text = "제작진 및 성우"
                 return cell
             case 1:
-                let cell: CrewTableViewCell
-                if let reusableCell = tableView.dequeueReusableCell(withIdentifier: String(describing: CrewTableViewCell.self), for: indexPath) as? CrewTableViewCell {
-                    cell = reusableCell
-                } else {
-                    let objectArray = Bundle.presentationLayer.loadNibNamed(String(describing: CrewTableViewCell.self), owner: nil, options: nil)
-                    cell = objectArray!.first! as! CrewTableViewCell
-                }
+                let cell: CrewTableViewCell = CrewTableViewCell.create(tableView: tableView, indexPath: indexPath)
                 cell.studioLabel.text = "WIT STUDIO"
                 cell.directorLabel.text = "코이즈카 마사시"
                 return cell
             case 2:
-                let cell: CastTableViewCell
-                if let reusableCell = tableView.dequeueReusableCell(withIdentifier: String(describing: CastTableViewCell.self), for: indexPath) as? CastTableViewCell {
-                    cell = reusableCell
-                } else {
-                    let objectArray = Bundle.presentationLayer.loadNibNamed(String(describing: CastTableViewCell.self), owner: nil, options: nil)
-                    cell = objectArray!.first! as! CastTableViewCell
-                }
+                let cell: CastTableViewCell = CastTableViewCell.create(tableView: tableView, indexPath: indexPath)
                 cell.castCollectionView.register(UINib(nibName: String(describing: CastCollectionViewCell.self), bundle: Bundle.presentationLayer), forCellWithReuseIdentifier: String(describing: CastCollectionViewCell.self))
                 cell.castCollectionView.delegate = castCollectionViewDelegate
                 cell.castCollectionView.dataSource = castCollectionViewDataSource
@@ -174,6 +157,17 @@ public class AnimeViewController: UIViewController {
                 break
             }
         case .myRating:
+//            let cell: MyRatingTableViewCell
+//            if let reusableCell = tableView.dequeueReusableCell(withIdentifier: String(describing: MyRatingTableViewCell.self), for: indexPath) as? MyRatingTableViewCell {
+//                cell = reusableCell
+//            } else {
+//                let objectArray = Bundle.presentationLayer.loadNibNamed(String(describing: MyRatingTableViewCell.self), owner: nil, options: nil)
+//                cell = objectArray!.first! as! MyRatingTableViewCell
+//            }
+//            cell.castCollectionView.register(UINib(nibName: String(describing: CastCollectionViewCell.self), bundle: Bundle.presentationLayer), forCellWithReuseIdentifier: String(describing: CastCollectionViewCell.self))
+//            cell.castCollectionView.delegate = castCollectionViewDelegate
+//            cell.castCollectionView.dataSource = castCollectionViewDataSource
+//            return cell
             break
         case .rating:
             break
@@ -254,7 +248,7 @@ public class AnimeViewController: UIViewController {
         }
         cell.mainImageView.layer.cornerRadius = collectionView.bounds.height / 2
         cell.mainView.layer.cornerRadius = collectionView.bounds.height / 2
-        cell.mainImageView.image = UIImage(resource: .netflix)
+        cell.mainImageView.image = indexPath.row%2 == 0 ? UIImage(resource: .netflix) : UIImage(resource: .laftel)
         return cell
     }
     

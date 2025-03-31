@@ -9,7 +9,7 @@ import UIKit
 
 @IBDesignable public class EffectImageView: UIView {
     
-    public let mainImageView: UIImageView = UIImageView()
+    private let mainImageView: UIImageView = UIImageView()
     private let gradientView: GradientView = GradientView()
     private let blurView: UIVisualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
     
