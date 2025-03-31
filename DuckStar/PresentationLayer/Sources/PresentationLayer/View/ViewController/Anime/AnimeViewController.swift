@@ -239,13 +239,7 @@ public class AnimeViewController: UIViewController {
     }
     
     private func platformCollectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell: PlatformCollectionViewCell
-        if let reusableCell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: PlatformCollectionViewCell.self), for: indexPath) as? PlatformCollectionViewCell {
-            cell = reusableCell
-        } else {
-            let objectArray = Bundle.presentationLayer.loadNibNamed(String(describing: PlatformCollectionViewCell.self), owner: nil, options: nil)
-            cell = objectArray![0] as! PlatformCollectionViewCell
-        }
+        let cell: PlatformCollectionViewCell = PlatformCollectionViewCell.create(collectionView: collectionView, indexPath: indexPath)
         cell.mainImageView.layer.cornerRadius = collectionView.bounds.height / 2
         cell.mainView.layer.cornerRadius = collectionView.bounds.height / 2
         cell.mainImageView.image = indexPath.row%2 == 0 ? UIImage(resource: .netflix) : UIImage(resource: .laftel)
@@ -266,13 +260,7 @@ public class AnimeViewController: UIViewController {
     }
     
     private func castCollectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell: CastCollectionViewCell
-        if let reusableCell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: CastCollectionViewCell.self), for: indexPath) as? CastCollectionViewCell {
-            cell = reusableCell
-        } else {
-            let objectArray = Bundle.presentationLayer.loadNibNamed(String(describing: CastCollectionViewCell.self), owner: nil, options: nil)
-            cell = objectArray![0] as! CastCollectionViewCell
-        }
+        let cell: CastCollectionViewCell = CastCollectionViewCell.create(collectionView: collectionView, indexPath: indexPath)
         cell.profileImageView.layer.cornerRadius = cell.bounds.width / 2
         cell.profileImageView.image = UIImage(resource: .naruto)
         cell.nameLabel.text = "코이즈카 마사시"
