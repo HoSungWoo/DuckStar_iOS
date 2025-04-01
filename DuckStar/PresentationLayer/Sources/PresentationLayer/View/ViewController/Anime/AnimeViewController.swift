@@ -54,8 +54,6 @@ public class AnimeViewController: UIViewController {
         effectImageView.startPoint = .init(x: 0.5, y: 0)
         effectImageView.endPoint = .init(x: 0.5, y: 1)
         effectImageView.image = UIImage(resource: .naruto)
-        
-        
     }
     
     private func configure() {
@@ -79,7 +77,6 @@ public class AnimeViewController: UIViewController {
     }
     
     private func configurePlatformCollectionView() {
-        
         platformCollectionViewDelegate = CollectionViewDelegate(didSelectItemAt: platformCollectionView(_:didSelectItemAt:), sizeForItemAt: platformCollectionView(_:layout:sizeForItemAt:))
         platformCollectionViewDataSource = CollectionViewDataSource(numberOfItemsInSection: platformCollectionView(_:numberOfItemsInSection:), cellForItemAt: platformCollectionView(_:cellForItemAt:))
         
@@ -157,18 +154,8 @@ public class AnimeViewController: UIViewController {
                 break
             }
         case .myRating:
-//            let cell: MyRatingTableViewCell
-//            if let reusableCell = tableView.dequeueReusableCell(withIdentifier: String(describing: MyRatingTableViewCell.self), for: indexPath) as? MyRatingTableViewCell {
-//                cell = reusableCell
-//            } else {
-//                let objectArray = Bundle.presentationLayer.loadNibNamed(String(describing: MyRatingTableViewCell.self), owner: nil, options: nil)
-//                cell = objectArray!.first! as! MyRatingTableViewCell
-//            }
-//            cell.castCollectionView.register(UINib(nibName: String(describing: CastCollectionViewCell.self), bundle: Bundle.presentationLayer), forCellWithReuseIdentifier: String(describing: CastCollectionViewCell.self))
-//            cell.castCollectionView.delegate = castCollectionViewDelegate
-//            cell.castCollectionView.dataSource = castCollectionViewDataSource
-//            return cell
-            break
+            let cell: MyRatingTableViewCell = MyRatingTableViewCell.create(tableView: tableView, indexPath: indexPath)
+            return cell
         case .rating:
             break
         case .episode:
