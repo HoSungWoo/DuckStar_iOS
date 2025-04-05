@@ -7,7 +7,9 @@
 
 import UIKit
 
-class RatingView: UIView {
+@IBDesignable class RatingView: UIView {
+    
+    weak var delegate: RatingViewDelegate?
     
     private let stackView: UIStackView = UIStackView()
     private let starViews: [StarView] = [
@@ -29,7 +31,7 @@ class RatingView: UIView {
         })
     }
     
-    var accentColor: UIColor = UIColor(resource: .dsmain) {
+    @IBInspectable var accentColor: UIColor? {
         didSet {
             accentColorDidSet()
         }
@@ -40,7 +42,7 @@ class RatingView: UIView {
         })
     }
     
-    var baseColor: UIColor = UIColor(resource: .dsgray2) {
+    @IBInspectable var baseColor: UIColor? {
         didSet {
             baseColorDidSet()
         }
@@ -67,9 +69,12 @@ class RatingView: UIView {
         addSubview(stackView)
         
         let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(panGestureHandler(recognizer: )))
+        panGestureRecognizer.delegate = self
         addGestureRecognizer(panGestureRecognizer)
         
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapGestureHandler(recognizer: )))
+        let tapGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(tapGestureHandler(recognizer: )))
+        tapGestureRecognizer.minimumPressDuration = 0
+        tapGestureRecognizer.delegate = self
         addGestureRecognizer(tapGestureRecognizer)
         
         stackView.axis = .horizontal
@@ -87,27 +92,57 @@ class RatingView: UIView {
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
         ])
     }
+    
+    private func animateStar(star: Float) {
+        UIView.animate(withDuration: 0.2, animations: { [weak self] in
+            self?.starViews.forEach({ starView in
+                starView.transform = CGAffineTransform(scaleX: 1, y: 1)
+            })
+            if 0 < star && star <= 5 {
+                self?.starViews[Int(ceil(star))-1].transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
+            }
+        })
+    }
     // MARK: - PanGesture
     @objc private func panGestureHandler(recognizer: UIPanGestureRecognizer) {
-        // 0.5 단위로
-        let newStar = max(0, min(Float(Int(recognizer.location(in: self).x / self.bounds.width * 10)+1) / 2.0, 5))
-        // 부드럽게
-//        let newStar = max(0, min(Float(recognizer.location(in: self).x / self.bounds.width * 5), 5))
-        if newStar != star {
-            HapticManager.shared.generate()
-        }
-        star = newStar
+        gestureHandler(recognizer: recognizer)
     }
     
     // MARK: - TapGesture
     @objc private func tapGestureHandler(recognizer: UITapGestureRecognizer) {
-        // 0.5 단위로
-        let newStar = max(0, min(Float(Int(recognizer.location(in: self).x / self.bounds.width * 10)+1) / 2.0, 5))
-        // 부드럽게
-//        let newStar = max(0, min(Float(recognizer.location(in: self).x / self.bounds.width * 5), 5))
-        if newStar != star {
-            HapticManager.shared.generate()
-        }
-        star = newStar
+        gestureHandler(recognizer: recognizer)
     }
+    
+    private func gestureHandler(recognizer: UIGestureRecognizer) {
+        let discreteStar: Float = Float(Int(recognizer.location(in: self).x / self.bounds.width * 10)+1) / 2.0
+        let rangedStar:Float = max(0, min(discreteStar, 5))
+        switch recognizer.state {
+        case .began:
+            HapticManager.shared.generate()
+            animateStar(star: discreteStar)
+        case .changed:
+            if rangedStar != star {
+                HapticManager.shared.generate()
+                animateStar(star: discreteStar)
+            }
+        case .ended:
+            animateStar(star: 0)
+            delegate?.valueChanged(rangedStar)
+        default:
+            break
+        }
+        
+        star = rangedStar
+    }
+}
+
+extension RatingView: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        
+        return gestureRecognizers?.contains(otherGestureRecognizer) ?? false
+    }
+}
+
+protocol RatingViewDelegate: AnyObject {
+    func valueChanged(_ value: Float)
 }

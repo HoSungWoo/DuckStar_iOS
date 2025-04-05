@@ -29,16 +29,24 @@
                         <rect key="frame" x="67.666666666666686" y="32" width="240" height="59"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="내 평점" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qNy-HP-aTz">
-                                <rect key="frame" x="94.333333333333329" y="0.0" width="50.999999999999986" height="21.666666666666668"/>
+                                <rect key="frame" x="94.333333333333329" y="0.0" width="50.999999999999986" height="19"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JaX-Fw-q8O" customClass="RatingView" customModule="PresentationLayer">
-                                <rect key="frame" x="0.0" y="35" width="240" height="24"/>
+                                <rect key="frame" x="0.0" y="27" width="240" height="32"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="24" id="UA8-id-OGL"/>
+                                    <constraint firstAttribute="height" constant="32" id="UA8-id-OGL"/>
                                 </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="baseColor">
+                                        <color key="value" name="dsgray2"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="accentColor">
+                                        <color key="value" name="dsmain"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                             </view>
                         </subviews>
                     </stackView>
@@ -59,6 +67,9 @@
     <resources>
         <namedColor name="dsgray2">
             <color red="0.9137254901960784" green="0.92549019607843142" blue="0.93725490196078431" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="dsmain">
+            <color red="0.96862745098039216" green="0.40000000000000002" blue="0.35294117647058826" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>
